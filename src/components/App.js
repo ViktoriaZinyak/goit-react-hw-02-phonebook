@@ -6,6 +6,7 @@ import ContactList from './ContactList';
 class App extends React.Component {
   state = {
     contacts: [],
+    filter: '',
   };
 
   addContact = name => {
@@ -25,14 +26,34 @@ class App extends React.Component {
     }));
   };
 
+  onFilter = e => {
+    this.setState({ filter: e.target.value });
+  };
+
+  getFilteredContacts = () => {
+    const { contacts, filter } = this.state;
+    const filterNormalized = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filterNormalized)
+    );
+  };
+
   render() {
-    const { contacts } = this.state;
+    const { contacts, filter } = this.state;
+    const filteredContacts = this.getFilteredContacts();
     return (
       <div>
         <h1>PhoneBook</h1>
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
-        <ContactList contacts={contacts} />
+        <label>
+          Find contacts by name
+          <input type="text" value={filter} onChange={this.onFilter}></input>
+        </label>
+        <ContactList
+          contacts={filteredContacts}
+          onDeleteContact={this.deleteContact}
+        />
       </div>
     );
   }
