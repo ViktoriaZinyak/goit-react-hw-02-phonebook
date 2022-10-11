@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Formik } from 'formik';
 
 class ContactForm extends Component {
   state = {
