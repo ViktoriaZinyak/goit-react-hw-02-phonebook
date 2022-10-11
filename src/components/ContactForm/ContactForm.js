@@ -1,27 +1,32 @@
 import React, { Component } from 'react';
+import { Formik } from 'formik';
 
 class ContactForm extends Component {
-  state = { name: '' };
+  state = {
+    name: '',
+    number: '',
+  };
 
   // contactFormNameId = nanoid();
 
   handleInputChange = e => {
-    this.setState({ name: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
+    console.log(this.state);
   };
 
   onHandleSubmit = e => {
     e.preventDefault();
-    // const contact = { name: e.target.value };
-    // this.setState.contacts({ name: e.target.value });
-    this.props.onSubmit(this.state.name);
+
+    this.props.onSubmit(this.state.name, this.state.number);
     this.reset();
   };
 
   reset = () => {
-    this.setState({ name: '' });
+    this.setState({ name: '', number: '' });
   };
 
   render() {
+    const { number, name } = this.state;
     return (
       <form onSubmit={this.onHandleSubmit}>
         <label>
@@ -32,9 +37,18 @@ class ContactForm extends Component {
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
-            value={this.state.name}
+            value={name}
             onChange={this.handleInputChange}
           />
+        </label>
+        <label>
+          Number
+          <input
+            type="tel"
+            name="number"
+            value={number}
+            onChange={this.handleInputChange}
+          ></input>
         </label>
         <button type="submit">Add contact</button>
       </form>
