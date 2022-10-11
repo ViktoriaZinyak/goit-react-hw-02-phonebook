@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
+import { Wrap } from './App.styled';
 
 class App extends React.Component {
   state = {
@@ -27,16 +28,6 @@ class App extends React.Component {
       : this.setState(prevState => ({
           contacts: [contact, ...prevState.contacts],
         }));
-    // const createdContact = this.state.contacts.filter(
-    //   contact => contact.name === name
-    // );
-
-    // if (createdContact.length > 0) {
-    //   alert(`${name} is already in contacts`);
-    // } else {
-    //   this.setState(prevState => ({
-    //     contacts: [contact, ...prevState.contacts],
-    //   }));
   };
 
   deleteContact = contactId => {
@@ -61,7 +52,7 @@ class App extends React.Component {
     const { filter } = this.state;
     const filteredContacts = this.getFilteredContacts();
     return (
-      <div>
+      <Wrap>
         <h1>PhoneBook</h1>
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
@@ -70,7 +61,7 @@ class App extends React.Component {
           contacts={filteredContacts}
           onDeleteContact={this.deleteContact}
         />
-      </div>
+      </Wrap>
     );
   }
 }
